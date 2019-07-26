@@ -320,35 +320,64 @@
                  in a way that faceting does *not* allow
     -->
 
+
     <fieldType name="exactish" class="solr.TextField"
-               positionIncrementGap="&pig;">
-      <analyzer>
+       positionIncrementGap="&pig;">
+        <analyzer>
             &less_aggressive_pre_tokenization_character_substitution;
             &standard_single_token_tokenizer;
-
+            &trim_leading_and_trailing_whitespace;
             &spaceify_dash_and_colon;
+            <filter class="solr.PatternReplaceFilterFactory"
+                pattern="'s\b" replacement="" replace="all"
+            />
             &remove_all_punctuation;
             &overlay_keyword_token_copies_for_later_processing;
             &keyword_aware_icu_normalization;
             &try_to_deal_with_cjk;
-            &remove_duplicates_at_same_position;
-        </analyzer>
-    </fieldType>
-
-    <fieldType name="less_exactish" class="solr.TextField" positionIncrementGap="&pig;">
-      <analyzer>
-        &less_aggressive_pre_tokenization_character_substitution;
-        &standard_single_token_tokenizer;
-	&english_plural_to_singular;
-	&remove_english_posessives;
-            &spaceify_dash_and_colon;
-            &remove_all_punctuation;
-            &overlay_keyword_token_copies_for_later_processing;
-            &keyword_aware_icu_normalization;
-            &try_to_deal_with_cjk;
+            <filter class="solr.PatternReplaceFilterFactory"
+                pattern="^(.*)$" replacement="AAA$1ZZZ"
+            />
+            <filter class="solr.PatternReplaceFilterFactory"
+            pattern="\s+" replacement="_" replace="all"
+            />
             &remove_duplicates_at_same_position;
       </analyzer>
     </fieldType>
+
+
+<!--    <fieldType name="exactish" class="solr.TextField"-->
+<!--               positionIncrementGap="&pig;">-->
+<!--      <analyzer>-->
+<!--            &less_aggressive_pre_tokenization_character_substitution;-->
+<!--            &standard_single_token_tokenizer;-->
+<!--            &spaceify_dash_and_colon;-->
+<!--            &remove_all_punctuation;-->
+<!--            &overlay_keyword_token_copies_for_later_processing;-->
+<!--            &keyword_aware_icu_normalization;-->
+<!--            &try_to_deal_with_cjk;-->
+<!--            &remove_duplicates_at_same_position;-->
+<!--        </analyzer>-->
+<!--    </fieldType>-->
+
+<!--    -->
+<!--   <fieldType name="less_exactish" class="solr.TextField" positionIncrementGap="&pig;">-->
+<!--      <analyzer>-->
+<!--        &less_aggressive_pre_tokenization_character_substitution;-->
+<!--        &standard_single_token_tokenizer;-->
+<!--        &english_plural_to_singular;-->
+<!--        &remove_english_posessives;-->
+<!--        &spaceify_dash_and_colon;-->
+<!--        &remove_all_punctuation;-->
+<!--        &overlay_keyword_token_copies_for_later_processing;-->
+<!--        &keyword_aware_icu_normalization;-->
+<!--        &try_to_deal_with_cjk;-->
+<!--        &remove_duplicates_at_same_position;-->
+<!--      </analyzer>-->
+<!--    </fieldType>-->
+<!--    -->
+<!--    -->
+
 
     <!-- Only left-anchored matches -->
     <fieldType name="text_leftanchored" class="solr.TextField"
