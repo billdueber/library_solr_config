@@ -325,7 +325,7 @@
        positionIncrementGap="&pig;">
         <analyzer>
             &less_aggressive_pre_tokenization_character_substitution;
-            &standard_single_token_tokenizer;
+            &tokenize_with_icu;;
             &trim_leading_and_trailing_whitespace;
             &spaceify_dash_and_colon;
             <filter class="solr.PatternReplaceFilterFactory"
@@ -338,37 +338,10 @@
             <filter class="solr.PatternReplaceFilterFactory"
                 pattern="^(.*)$" replacement="ǣ $1 Ǣ"
             />
-            <filter class="solr.PatternReplaceFilterFactory"
-            pattern="\s+" replacement="_" replace="all"
-            />
             &remove_duplicates_at_same_position;
       </analyzer>
     </fieldType>
 
-
-    <fieldType name="exactish_test" class="solr.TextField"
-    positionIncrementGap="&pig;">
-    <analyzer>
-    &less_aggressive_pre_tokenization_character_substitution;
-    &tokenize_with_icu;
-    &trim_leading_and_trailing_whitespace;
-    &spaceify_dash_and_colon;
-    <filter class="solr.PatternReplaceFilterFactory"
-    pattern="'s\b" replacement="" replace="all"
-    />
-    &remove_all_punctuation;
-    &overlay_keyword_token_copies_for_later_processing;
-    &keyword_aware_icu_normalization;
-    &try_to_deal_with_cjk;
-    <filter class="solr.PatternReplaceFilterFactory"
-    pattern="^(.*)$" replacement="AAA$1ZZZ"
-    />
-    <filter class="solr.PatternReplaceFilterFactory"
-    pattern="\s+" replacement="_" replace="all"
-    />
-    &remove_duplicates_at_same_position;
-    </analyzer>
-    </fieldType>
 
 
 <!--    <fieldType name="exactish" class="solr.TextField"-->

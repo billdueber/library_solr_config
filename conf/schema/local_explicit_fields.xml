@@ -1,6 +1,11 @@
 <!-- This fine included so attempts to import the default
      filename in schema.xml don't blow up -->
 
+<!-- TEST -->
+
+<field name="title_ab_exactish" type="exactish" indexed="true"/>
+<copyField source="title_ab" dest="title_ab_exactish"/>
+
 <!-- Core Fields  -->
 
 <field name="id_int"          type="long"      indexed="true" stored="true"/>
